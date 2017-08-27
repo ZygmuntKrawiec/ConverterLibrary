@@ -6,8 +6,17 @@ using System.Threading.Tasks;
 
 namespace ConverterLibrary
 {
+    /// <summary>
+    /// Represents a converter which changes an arabic number into roman numeral and vice versa.
+    /// </summary>
     public class ArabicRomanNumbersConverter
-    {
+    {   
+        /// <summary>
+        /// Converts an arabic number into a roman numeral.
+        /// A number to convert must be in the range of 0 to 3999.
+        /// </summary>
+        /// <param name="num">An arabic number to convert.</param>
+        /// <returns>A roman numeral.</returns>
         public string ConvertArabicToRoman(int num)
         {
             if (num > 3999 || num <= 0)
@@ -46,6 +55,11 @@ namespace ConverterLibrary
             return value.ToString();
         }
 
+        /// <summary>
+        /// Converts a roman numeral into an arabic number.
+        /// </summary>
+        /// <param name="num">A roman numeral.</param>
+        /// <returns>AN arabic number.</returns>
         public int ConvertRomanToArabic(string num)
         {
             if (num == null)
@@ -56,6 +70,9 @@ namespace ConverterLibrary
             var romanCharacters = Enum.GetValues(typeof(romanDigit));
             int currentRomanDigit = romanCharacters.Length;
             romanDigit character = (romanDigit)romanCharacters.GetValue(--currentRomanDigit);
+
+            // A Guardian instance checks if a romanDigit in the roman numeral appears maximum three times,
+            // otherwise it throws an exception. 
             Guardian guardian = new Guardian(3, () => { throw new Exception("Your number format is wrong."); });
 
             do
@@ -91,7 +108,7 @@ namespace ConverterLibrary
             while (amountOfChars > i);
             return value;
         }
-
+        
         private int findRomanSpecialNumber(romanDigit character)
         {
             double conditionNumber = (int)character;
@@ -103,6 +120,9 @@ namespace ConverterLibrary
         }
     }
 
+    /// <summary>
+    /// Represents a set of roman digits.
+    /// </summary>
     enum romanDigit
     {
         I = 1,
@@ -114,6 +134,9 @@ namespace ConverterLibrary
         M = 1000,
     }
 
+    /// <summary>
+    /// Represents a set of roman special numbers, which appears only in a special sequence.
+    /// </summary>
     enum romanSpecialNumber
     {
         IV = 4,
